@@ -1,0 +1,775 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const AICareerApp());
+}
+
+class AICareerApp extends StatelessWidget {
+  const AICareerApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'AI Career App',
+      theme: ThemeData.dark(),
+      home: const MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  int selectedIndex = 0;
+
+  final List<Map<String, dynamic>> jobs = [
+
+    {
+      "title": "AI Engineer",
+      "company": "OpenAI",
+      "salary": "₹12 LPA",
+      "location": "Remote",
+      "skills": "Python, ML, Deep Learning",
+      "roadmap": "Python → ML → DL → Projects",
+    },
+
+    {
+      "title": "Data Scientist",
+      "company": "Google",
+      "salary": "₹18 LPA",
+      "location": "Bangalore",
+      "skills": "Python, Pandas, SQL",
+      "roadmap": "Python → Statistics → Data Analysis",
+    },
+
+    {
+      "title": "ML Developer",
+      "company": "Microsoft",
+      "salary": "₹15 LPA",
+      "location": "London",
+      "skills": "TensorFlow, AI Models",
+      "roadmap": "Python → ML → Deployment",
+    },
+
+    {
+      "title": "Cyber Security",
+      "company": "Meta",
+      "salary": "₹20 LPA",
+      "location": "USA",
+      "skills": "Networking, Linux, Security",
+      "roadmap": "Linux → Networking → Security",
+    },
+
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        backgroundColor: const Color(0xff1A1A2E),
+        selectedItemColor: Colors.purpleAccent,
+        unselectedItemColor: Colors.grey,
+
+        onTap: (value) {
+          setState(() {
+            selectedIndex = value;
+          });
+        },
+
+        items: const [
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: "Roadmap",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.smart_toy),
+            label: "Mentor",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: "Courses",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+
+        ],
+      ),
+
+      body: selectedIndex == 0
+          ? homePage()
+          : selectedIndex == 1
+              ? const RoadmapScreen()
+              : selectedIndex == 2
+                  ? const MentorScreen()
+                  : selectedIndex == 3
+                      ? const CoursesScreen()
+                      : const ProfileScreen(),
+    );
+  }
+
+  Widget homePage() {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+
+            const Text(
+              "Hello, Khushi 👋",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            const Text(
+              "Ready to build your AI future?",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Search careers...",
+                prefixIcon: const Icon(Icons.search),
+
+                filled: true,
+                fillColor: Colors.white10,
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const MentorScreen(),
+                  ),
+                );
+              },
+
+              child: Container(
+                padding: const EdgeInsets.all(20),
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xff6A5AE0),
+                      Color(0xffC86DD7),
+                    ],
+                  ),
+                ),
+
+                child: const Row(
+                  children: [
+
+                    CircleAvatar(
+                      radius: 28,
+                      backgroundColor: Colors.black26,
+
+                      child: Icon(
+                        Icons.smart_toy,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+
+                    SizedBox(width: 15),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+
+                        children: [
+
+                          Text(
+                            "AI Mentor",
+
+                            style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(height: 5),
+
+                          Text(
+                            "Get AI career guidance instantly.",
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Text(
+              "Trending Careers",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Expanded(
+              child: ListView.builder(
+                itemCount: jobs.length,
+
+                itemBuilder: (context, index) {
+
+                  final job = jobs[index];
+
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 18),
+                    padding: const EdgeInsets.all(18),
+
+                    decoration: BoxDecoration(
+                      color: Colors.white10,
+                      borderRadius: BorderRadius.circular(22),
+                    ),
+
+                    child: Row(
+                      children: [
+
+                        Container(
+                          width: 60,
+                          height: 60,
+
+                          decoration: BoxDecoration(
+                            color: Colors.purple.withOpacity(0.3),
+                            borderRadius:
+                                BorderRadius.circular(15),
+                          ),
+
+                          child: const Icon(
+                            Icons.work,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ),
+
+                        const SizedBox(width: 18),
+
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
+
+                            children: [
+
+                              Text(
+                                job["title"],
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight:
+                                      FontWeight.bold,
+                                ),
+                              ),
+
+                              const SizedBox(height: 6),
+
+                              Text(
+                                job["company"],
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+
+                              const SizedBox(height: 6),
+
+                              Text(
+                                job["salary"],
+                                style: const TextStyle(
+                                  color:
+                                      Colors.purpleAccent,
+                                  fontWeight:
+                                      FontWeight.bold,
+                                ),
+                              ),
+
+                              const SizedBox(height: 6),
+
+                              Text(job["location"]),
+                            ],
+                          ),
+                        ),
+
+                        ElevatedButton(
+                          style:
+                              ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Colors.purple,
+                          ),
+
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    JobDetailsScreen(
+                                  job: job,
+                                ),
+                              ),
+                            );
+                          },
+
+                          child: const Text("Apply"),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class JobDetailsScreen extends StatelessWidget {
+
+  final Map<String, dynamic> job;
+
+  const JobDetailsScreen({
+    super.key,
+    required this.job,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(job["title"]),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+
+          children: [
+
+            Text(
+              job["title"],
+              style: const TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              job["company"],
+              style: const TextStyle(
+                fontSize: 22,
+                color: Colors.grey,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            Text(
+              "Salary: ${job["salary"]}",
+              style: const TextStyle(fontSize: 20),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              "Location: ${job["location"]}",
+              style: const TextStyle(fontSize: 20),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              "Skills Required:",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              job["skills"],
+              style: const TextStyle(fontSize: 18),
+            ),
+
+            const SizedBox(height: 20),
+
+            const Text(
+              "Roadmap:",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              job["roadmap"],
+              style: const TextStyle(fontSize: 18),
+            ),
+
+            const SizedBox(height: 40),
+
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.purple,
+                ),
+
+                onPressed: () {
+
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Application Submitted 🚀",
+                      ),
+                    ),
+                  );
+                },
+
+                child: const Text(
+                  "Apply Now",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MentorScreen extends StatelessWidget {
+  const MentorScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text("AI Mentor"),
+      ),
+
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+
+        child: Column(
+          children: [
+
+            Expanded(
+              child: ListView(
+                children: [
+
+                  chatBubble(
+                    "Mujhe AI Engineer banna hai",
+                    false,
+                  ),
+
+                  chatBubble(
+                    "Great choice 🚀\n\nStep 1: Learn Python\nStep 2: Learn ML\nStep 3: Build Projects",
+                    true,
+                  ),
+
+                  chatBubble(
+                    "Best skill for 2025?",
+                    false,
+                  ),
+
+                  chatBubble(
+                    "AI + Cyber Security + Cloud ☁️",
+                    true,
+                  ),
+
+                ],
+              ),
+            ),
+
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Ask AI mentor...",
+
+                suffixIcon: const Icon(
+                  Icons.send,
+                  color: Colors.purple,
+                ),
+
+                filled: true,
+                fillColor: Colors.white10,
+
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(18),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget chatBubble(String text, bool ai) {
+
+  return Align(
+    alignment:
+        ai ? Alignment.centerLeft : Alignment.centerRight,
+
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 15),
+      padding: const EdgeInsets.all(16),
+
+      decoration: BoxDecoration(
+        color: ai
+            ? Colors.purple.withOpacity(0.3)
+            : Colors.white10,
+
+        borderRadius: BorderRadius.circular(18),
+      ),
+
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 16),
+      ),
+    ),
+  );
+}
+
+class RoadmapScreen extends StatelessWidget {
+  const RoadmapScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("AI Roadmap"),
+      ),
+
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+
+        children: const [
+
+          roadmapTile("1", "Learn Python"),
+          roadmapTile("2", "Learn Machine Learning"),
+          roadmapTile("3", "Learn Deep Learning"),
+          roadmapTile("4", "Build AI Projects"),
+          roadmapTile("5", "Apply for Jobs"),
+
+        ],
+      ),
+    );
+  }
+}
+
+class CoursesScreen extends StatelessWidget {
+  const CoursesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("Courses"),
+      ),
+
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+
+        children: [
+
+          courseCard(
+            "Python for AI",
+            "Beginner Friendly",
+          ),
+
+          courseCard(
+            "Machine Learning",
+            "Intermediate",
+          ),
+
+          courseCard(
+            "Deep Learning",
+            "Advanced",
+          ),
+
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      backgroundColor: const Color(0xff0F0F1A),
+
+      body: const Center(
+        child: Text(
+          "Profile Screen",
+          style: TextStyle(fontSize: 28),
+        ),
+      ),
+    );
+  }
+}
+
+Widget roadmapTile(String step, String title) {
+
+  return Container(
+    margin: const EdgeInsets.only(bottom: 20),
+    padding: const EdgeInsets.all(20),
+
+    decoration: BoxDecoration(
+      color: Colors.white10,
+      borderRadius: BorderRadius.circular(20),
+    ),
+
+    child: Row(
+      children: [
+
+        CircleAvatar(
+          backgroundColor: Colors.purple,
+          child: Text(step),
+        ),
+
+        const SizedBox(width: 20),
+
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget courseCard(String title, String level) {
+
+  return Container(
+    margin: const EdgeInsets.only(bottom: 20),
+    padding: const EdgeInsets.all(20),
+
+    decoration: BoxDecoration(
+      color: Colors.white10,
+      borderRadius: BorderRadius.circular(20),
+    ),
+
+    child: Row(
+      mainAxisAlignment:
+          MainAxisAlignment.spaceBetween,
+
+      children: [
+
+        Column(
+          crossAxisAlignment:
+              CrossAxisAlignment.start,
+
+          children: [
+
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 5),
+
+            Text(level),
+          ],
+        ),
+
+        ElevatedButton(
+          onPressed: () {},
+
+          child: const Text("Start"),
+        ),
+      ],
+    ),
+  );
+}
